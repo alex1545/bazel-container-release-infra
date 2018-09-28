@@ -21,7 +21,7 @@ timeout: 21600s
 steps:
 # Step: print the bazel version for confirmation
   # - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-  - name: 'gcr.io/cloud-builders/bazel'
+  - name: 'gcr.io/cloud-marketplace/google/bazel:latest'
     args:
     - 'bazel'
     - 'version'
