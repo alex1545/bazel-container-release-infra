@@ -28,48 +28,48 @@ steps:
     waitFor:
     - "-" # wait for nothing - start immediately
 
-# Step: build the fully loaded container using rules_docker
-  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-    # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
-    # This is to make sure Bazel generated files can be accessed by multiple containers.
-    args: [
-      'bazel',
-      '--output_base=/workspace',
-      'run' ,
-      '--verbose_failures',
-      '--spawn_strategy=standalone',
-      '--genrule_strategy=standalone',
-      '//container/ubuntu16_04/builders/bazel:bazel_0.17.1'
-    ]
-    id: 'container-build'
-    waitFor:
-    - 'version'
+# # Step: build the fully loaded container using rules_docker
+#   - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+#     # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
+#     # This is to make sure Bazel generated files can be accessed by multiple containers.
+#     args: [
+#       'bazel',
+#       '--output_base=/workspace',
+#       'run' ,
+#       '--verbose_failures',
+#       '--spawn_strategy=standalone',
+#       '--genrule_strategy=standalone',
+#       '//container/ubuntu16_04/builders/bazel:bazel_0.17.1'
+#     ]
+#     id: 'container-build'
+#     waitFor:
+#     - 'version'
 
-# Step: re-tag the image
-  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-    args: ['docker', 'tag', 'bazel/container/ubuntu16_04/builders/bazel:bazel_0.17.1', 'gcr.io/asci-toolchain/alex-test-bazel:0.17.1']
-    id: 'container-tag'
-    waitFor: # wait for all artifacts to be ready
-    - 'container-build'
+# # Step: re-tag the image
+#   - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+#     args: ['docker', 'tag', 'bazel/container/ubuntu16_04/builders/bazel:bazel_0.17.1', 'gcr.io/asci-toolchain/alex-test-bazel:0.17.1']
+#     id: 'container-tag'
+#     waitFor: # wait for all artifacts to be ready
+#     - 'container-build'
 
-# Step: test the image
-# We use container_test rule, which is a Bazel wrapper of container_structure_test.
-# https://github.com/bazelbuild/rules_docker/blob/master/contrib/test.bzl
-  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-    args: [
-      'bazel',
-      '--output_base=/workspace',
-      'test',
-      '--test_output=all',
-      '--verbose_failures',
-      '--spawn_strategy=standalone',
-      '--genrule_strategy=standalone',
-      '//container/ubuntu16_04/builders/bazel:bazel_0.17.1-test'
-    ]
-    id: 'image-test'
-    waitFor:
-    - 'container-build'
+# # Step: test the image
+# # We use container_test rule, which is a Bazel wrapper of container_structure_test.
+# # https://github.com/bazelbuild/rules_docker/blob/master/contrib/test.bzl
+#   - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+#     args: [
+#       'bazel',
+#       '--output_base=/workspace',
+#       'test',
+#       '--test_output=all',
+#       '--verbose_failures',
+#       '--spawn_strategy=standalone',
+#       '--genrule_strategy=standalone',
+#       '//container/ubuntu16_04/builders/bazel:bazel_0.17.1-test'
+#     ]
+#     id: 'image-test'
+#     waitFor:
+#     - 'container-build'
 
-# Build the release-container
-images:
-  - 'gcr.io/asci-toolchain/alex-test-bazel:0.17.1'
+# # Build the release-container
+# images:
+#   - 'gcr.io/asci-toolchain/alex-test-bazel:0.17.1'
