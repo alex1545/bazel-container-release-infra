@@ -8,7 +8,7 @@ pipeline:
   stages:
   - stage: Build and Release bazel container
     type: GCB
-    filename: /louhi-config/helloworld/gcb/release.yaml
+    filename: /louhi-config/gcb/release.yaml
     # artifacts:
     #   src: 'go/src/helloworld'
     #   out:
