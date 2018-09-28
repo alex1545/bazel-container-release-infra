@@ -1,20 +1,22 @@
-name: 'helloworld release'
+name: 'alexmogi bazel container release'
 repository:
-  url: https://cloud-release-internal.googlesource.com/louhi/codelab/helloworld
+  url: https://github.com/alex1545/bazel-container
   poll_interval: "1m"
-  branch_filter: ['^codelab-.+$']
+  branch_filter: ['^master$']
+
 pipeline:
   stages:
-  - stage: Build and Release helloworld
+  - stage: Build and Release bazel container
     type: GCB
     filename: /louhi-config/helloworld/gcb/release.yaml
-    artifacts:
-      src: 'go/src/helloworld'
-      out:
-        docker-images: 'helloworld'
+    # artifacts:
+    #   src: 'go/src/helloworld'
+    #   out:
+    #     docker-images: 'helloworld'
+
 notifications:
 - type: Email
-  to: ["louhi-codelab@google.com"]
+  to: ["alexmogi@google.com"]
   subject: '%{FLOW.NAME}: %{FLOW.BRANCH} rev:%{OPERATION.REVISION}'
   message: |
     The current status is %{OPERATION.STATUS}.
