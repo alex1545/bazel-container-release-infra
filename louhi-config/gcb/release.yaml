@@ -21,13 +21,22 @@ timeout: 21600s
 steps:
 # Step: print the bazel version for confirmation
   # - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-  - name: 'gcr.io/cloud-marketplace/google/bazel:latest'
+  # - name: 'gcr.io/cloud-marketplace/google/bazel:latest'
+  #   args:
+  #   - 'bazel'
+  #   - 'version'
+  #   id: 'version'
+  #   waitFor:
+  #   - "-" # wait for nothing - start immediately
+
+
+  - name: k8s.gcr.io/addon-builder
     args:
-    - 'bazel'
-    - 'version'
-    id: 'version'
+    - 'ls'
+    - '-a'
+    id: version
     waitFor:
-    - "-" # wait for nothing - start immediately
+    - "-"
 
 # # Step: build the fully loaded container using rules_docker
 #   - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
