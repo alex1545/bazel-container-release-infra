@@ -9,10 +9,10 @@ pipeline:
   - stage: Build and Release bazel container
     type: GCB
     filename: /louhi-config/gcb/release.yaml
-    # artifacts:
-    #   src: 'go/src/helloworld'
-    #   out:
-    #     docker-images: 'helloworld'
+    artifacts:
+      src: 'go/src/helloworld'
+      out:
+        docker-images: 'helloworld'
 
 notifications:
 - type: Email
